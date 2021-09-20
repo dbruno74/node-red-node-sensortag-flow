@@ -1,4 +1,4 @@
-# sensortag-dashboard-flow
+# node-red-node-sensortag-flow
 
 node-red flow to show sensor data from TI SensorTag, TI SensorTag CC2650 and TI SensorTag CC1352.
 
