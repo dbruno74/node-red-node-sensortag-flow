@@ -1,0 +1,767 @@
+[
+    {
+        "id": "ea5d4dd247fe2c99",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2f94d031281d103a",
+        "type": "sensorTag",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "topic": "sensorTag",
+        "uuid": "",
+        "temperature": true,
+        "humidity": true,
+        "pressure": false,
+        "magnetometer": false,
+        "accelerometer": true,
+        "gyroscope": false,
+        "keys": false,
+        "button": true,
+        "luxometer": true,
+        "battery": true,
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "351f04c959ed7a95",
+                "87e556072cc93f2c"
+            ]
+        ]
+    },
+    {
+        "id": "351f04c959ed7a95",
+        "type": "debug",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1150,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "a0655998dd1b3718",
+        "type": "ui_gauge",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Temperature",
+        "group": "3df6bc4c6c47ac6a",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "°C",
+        "format": "{{msg.payload.ambient}}°C",
+        "min": "-20",
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1150,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "87e556072cc93f2c",
+        "type": "switch",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Dispatch sensor data",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "sensorTag/temperature",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "sensorTag/humidity",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "sensorTag/button",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "sensorTag/accelerometer",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "sensorTag/batteryLevel",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "sensorTag/luxometer",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 6,
+        "x": 340,
+        "y": 460,
+        "wires": [
+            [
+                "a0655998dd1b3718"
+            ],
+            [
+                "a03222ad63609d24"
+            ],
+            [
+                "8b91c59add63a4f2"
+            ],
+            [
+                "a520027ba5d0bf7b"
+            ],
+            [
+                "b63cfee2e235adfe"
+            ],
+            [
+                "b7c2fdb348be9a07"
+            ]
+        ]
+    },
+    {
+        "id": "a03222ad63609d24",
+        "type": "ui_gauge",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Humidity",
+        "group": "3df6bc4c6c47ac6a",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{msg.payload.humidity}}%",
+        "min": "0",
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1140,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "0a3ff9d24ac5be1b",
+        "type": "switch",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Dispatch buttons",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "BUTTON_0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "BUTTON_1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 750,
+        "y": 480,
+        "wires": [
+            [
+                "60df902479cfadc6"
+            ],
+            [
+                "b6e9bcd6b302fd66"
+            ]
+        ]
+    },
+    {
+        "id": "8b91c59add63a4f2",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "convert key",
+        "func": "if (msg.payload.key == 0) {\n    msg.topic=\"BUTTON_0\";\n}\n\nif (msg.payload.key == 1) {\n    msg.topic=\"BUTTON_1\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 480,
+        "wires": [
+            [
+                "0a3ff9d24ac5be1b"
+            ]
+        ]
+    },
+    {
+        "id": "af482a2e386f378a",
+        "type": "ui_multistate_switch",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Left",
+        "group": "1c82bea1e5ecff62",
+        "order": 1,
+        "width": 0,
+        "height": 1,
+        "label": "Left Button",
+        "stateField": "payload",
+        "enableField": "enable",
+        "passthroughField": "passthrough",
+        "inputMsgField": "passthrough",
+        "rounded": true,
+        "useThemeColors": false,
+        "hideSelectedLabel": false,
+        "multilineLabel": true,
+        "passThrough": "never",
+        "inputMsg": "all",
+        "userInput": "enabled_show",
+        "options": [
+            {
+                "label": "OFF",
+                "value": "RELEASED",
+                "valueType": "str",
+                "color": "#999999"
+            },
+            {
+                "label": "ON",
+                "value": "PRESSED",
+                "valueType": "str",
+                "color": "#999999"
+            },
+            {
+                "label": "HOLD",
+                "value": "HOLD",
+                "valueType": "str",
+                "color": "#999999"
+            }
+        ],
+        "x": 1130,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "60df902479cfadc6",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "convert event",
+        "func": "if (msg.payload.event == 0x00) {\n    msg.payload = \"RELEASED\";\n}\n\nif (msg.payload.event == 0x01) {\n    msg.payload = \"PRESSED\";\n}\n\nif (msg.payload.event == 0xB1) {\n    msg.payload = \"HOLD\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 460,
+        "wires": [
+            [
+                "af482a2e386f378a"
+            ]
+        ]
+    },
+    {
+        "id": "4e53b37a60294da3",
+        "type": "ui_multistate_switch",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Right",
+        "group": "1c82bea1e5ecff62",
+        "order": 2,
+        "width": 0,
+        "height": 1,
+        "label": "Right Button",
+        "stateField": "payload",
+        "enableField": "enable",
+        "passthroughField": "passthrough",
+        "inputMsgField": "passthrough",
+        "rounded": true,
+        "useThemeColors": false,
+        "hideSelectedLabel": false,
+        "multilineLabel": true,
+        "passThrough": "never",
+        "inputMsg": "all",
+        "userInput": "enabled_show",
+        "options": [
+            {
+                "label": "OFF",
+                "value": "RELEASED",
+                "valueType": "str",
+                "color": "#999999"
+            },
+            {
+                "label": "ON",
+                "value": "PRESSED",
+                "valueType": "str",
+                "color": "#999999"
+            },
+            {
+                "label": "HOLD",
+                "value": "HOLD",
+                "valueType": "str",
+                "color": "#999999"
+            }
+        ],
+        "x": 1130,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b6e9bcd6b302fd66",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "convert event",
+        "func": "if (msg.payload.event == 0x00) {\n    msg.payload = \"RELEASED\";\n}\n\nif (msg.payload.event == 0x01) {\n    msg.payload = \"PRESSED\";\n}\n\nif (msg.payload.event == 0xB1) {\n    msg.payload = \"HOLD\";\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 500,
+        "wires": [
+            [
+                "4e53b37a60294da3"
+            ]
+        ]
+    },
+    {
+        "id": "b3cf728304c9b214",
+        "type": "ui_chart",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "group": "7d5e08888b02f065",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Accelerometer",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "cubic",
+        "nodata": "",
+        "dot": true,
+        "ymin": "-32768",
+        "ymax": "32768",
+        "removeOlder": "10",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#4db31e",
+            "#1b6eda",
+            "#ff0f0f",
+            "#a02c81",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 1160,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a520027ba5d0bf7b",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "convert coord",
+        "func": "msg.topic = msg.payload.axis;\nmsg.payload=parseFloat(msg.payload.coord/100).toFixed(1)*100;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 540,
+        "wires": [
+            [
+                "b3cf728304c9b214"
+            ]
+        ]
+    },
+    {
+        "id": "b63cfee2e235adfe",
+        "type": "ui_gauge",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "group": "9104abfcb776560f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "compass",
+        "title": "Battery Level",
+        "label": "",
+        "format": "{{msg.payload.val}}%",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 1150,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "0ffe099d6586fd98",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "func": " msg.topic=\"writeLed\";\n if (msg.payload) {\n    msg.payload={'ledNum': 0, 'val': 1}  \n} else {\n    msg.payload={'ledNum': 0, 'val': 0}  \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 100,
+        "wires": [
+            [
+                "2f94d031281d103a"
+            ]
+        ]
+    },
+    {
+        "id": "092a35ae540242a2",
+        "type": "ui_switch",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "label": "RED",
+        "tooltip": "",
+        "group": "b04138c01a45fbf1",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "x": 130,
+        "y": 100,
+        "wires": [
+            [
+                "0ffe099d6586fd98"
+            ]
+        ]
+    },
+    {
+        "id": "5beb6eb8dce34e5a",
+        "type": "ui_switch",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "label": "GREEN",
+        "tooltip": "",
+        "group": "b04138c01a45fbf1",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "x": 140,
+        "y": 180,
+        "wires": [
+            [
+                "c2ee0827825fa511"
+            ]
+        ]
+    },
+    {
+        "id": "c2ee0827825fa511",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "func": " msg.topic=\"writeLed\";\n if (msg.payload) {\n    msg.payload={'ledNum': 1, 'val': 1}  \n} else {\n    msg.payload={'ledNum': 1, 'val': 0}  \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "2f94d031281d103a"
+            ]
+        ]
+    },
+    {
+        "id": "459bd54fe662988c",
+        "type": "ui_chart",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Luxometer",
+        "group": "40addcbf9462c1d0",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Luxometer",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 1150,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b7c2fdb348be9a07",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "convert lux",
+        "func": "msg.topic = \"lux\";\nmsg.payload=parseFloat(msg.payload.lux);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 620,
+        "wires": [
+            [
+                "459bd54fe662988c"
+            ]
+        ]
+    },
+    {
+        "id": "bb07b2f8b23bd67f",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "func": " msg.topic=\"writeLed\";\n if (msg.payload) {\n    msg.payload={'ledNum': 2, 'val': 1}  \n} else {\n    msg.payload={'ledNum': 2, 'val': 0}  \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 260,
+        "wires": [
+            [
+                "2f94d031281d103a"
+            ]
+        ]
+    },
+    {
+        "id": "bbb662b7da504c12",
+        "type": "ui_switch",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "label": "BLUE",
+        "tooltip": "",
+        "group": "b04138c01a45fbf1",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "bb07b2f8b23bd67f"
+            ]
+        ]
+    },
+    {
+        "id": "af5fe79e6d32dfd1",
+        "type": "ui_spacer",
+        "z": "ea5d4dd247fe2c99",
+        "name": "spacer",
+        "group": "3df6bc4c6c47ac6a",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "63eb43d1ab02be65",
+        "type": "ui_spacer",
+        "z": "ea5d4dd247fe2c99",
+        "name": "spacer",
+        "group": "13b2e486d9762afd",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "efbea8093e92ea7b",
+        "type": "ui_spacer",
+        "z": "ea5d4dd247fe2c99",
+        "name": "spacer",
+        "group": "13b2e486d9762afd",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "3df6bc4c6c47ac6a",
+        "type": "ui_group",
+        "name": "Ambient",
+        "tab": "c1a63c15a73b6735",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "1c82bea1e5ecff62",
+        "type": "ui_group",
+        "name": "Buttons",
+        "tab": "862cabe5ab0b919d",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7d5e08888b02f065",
+        "type": "ui_group",
+        "name": "Vibrations",
+        "tab": "c1a63c15a73b6735",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9104abfcb776560f",
+        "type": "ui_group",
+        "name": "Power",
+        "tab": "862cabe5ab0b919d",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "b04138c01a45fbf1",
+        "type": "ui_group",
+        "name": "LEDs",
+        "tab": "862cabe5ab0b919d",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "40addcbf9462c1d0",
+        "type": "ui_group",
+        "name": "Light",
+        "tab": "c1a63c15a73b6735",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "c1a63c15a73b6735",
+        "type": "ui_tab",
+        "name": "Sensors",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "862cabe5ab0b919d",
+        "type": "ui_tab",
+        "name": "Device",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
