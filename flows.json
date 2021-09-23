@@ -7,6 +7,238 @@
         "info": ""
     },
     {
+        "id": "a9aa78485087f860",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "af5fe79e6d32dfd1",
+        "type": "ui_spacer",
+        "z": "ea5d4dd247fe2c99",
+        "name": "spacer",
+        "group": "3df6bc4c6c47ac6a",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "63eb43d1ab02be65",
+        "type": "ui_spacer",
+        "z": "ea5d4dd247fe2c99",
+        "name": "spacer",
+        "group": "13b2e486d9762afd",
+        "order": 2,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "efbea8093e92ea7b",
+        "type": "ui_spacer",
+        "z": "ea5d4dd247fe2c99",
+        "name": "spacer",
+        "group": "13b2e486d9762afd",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "3df6bc4c6c47ac6a",
+        "type": "ui_group",
+        "name": "Ambient",
+        "tab": "c1a63c15a73b6735",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true
+    },
+    {
+        "id": "1c82bea1e5ecff62",
+        "type": "ui_group",
+        "name": "Buttons",
+        "tab": "862cabe5ab0b919d",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "7d5e08888b02f065",
+        "type": "ui_group",
+        "name": "Vibrations",
+        "tab": "c1a63c15a73b6735",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "9104abfcb776560f",
+        "type": "ui_group",
+        "name": "Power",
+        "tab": "862cabe5ab0b919d",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "b04138c01a45fbf1",
+        "type": "ui_group",
+        "name": "LEDs",
+        "tab": "862cabe5ab0b919d",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "40addcbf9462c1d0",
+        "type": "ui_group",
+        "name": "Light",
+        "tab": "c1a63c15a73b6735",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "c1a63c15a73b6735",
+        "type": "ui_tab",
+        "name": "Sensors",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "862cabe5ab0b919d",
+        "type": "ui_tab",
+        "name": "Device",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "d0835c77f34c9a66",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "light"
+            }
+        },
+        "site": {
+            "name": "Node-RED Dashboard",
+            "hideToolbar": "false",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "true",
+            "dateFormat": "DD/MM/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "30e1f2e7e2964dac",
+        "type": "ui_group",
+        "name": "App list",
+        "tab": "057c895eb377e151",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "057c895eb377e151",
+        "type": "ui_tab",
+        "name": "Software",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
         "id": "2f94d031281d103a",
         "type": "sensorTag",
         "z": "ea5d4dd247fe2c99",
@@ -657,111 +889,96 @@
         ]
     },
     {
-        "id": "af5fe79e6d32dfd1",
-        "type": "ui_spacer",
-        "z": "ea5d4dd247fe2c99",
-        "name": "spacer",
-        "group": "3df6bc4c6c47ac6a",
-        "order": 2,
-        "width": 1,
-        "height": 1
+        "id": "7fa903afbafef497",
+        "type": "snapd",
+        "z": "a9aa78485087f860",
+        "name": "",
+        "x": 350,
+        "y": 140,
+        "wires": [
+            [
+                "e1a1995c875abb75",
+                "7a04e61505caa3c3"
+            ]
+        ]
     },
     {
-        "id": "63eb43d1ab02be65",
-        "type": "ui_spacer",
-        "z": "ea5d4dd247fe2c99",
-        "name": "spacer",
-        "group": "13b2e486d9762afd",
-        "order": 2,
-        "width": 1,
-        "height": 1
+        "id": "e1a1995c875abb75",
+        "type": "debug",
+        "z": "a9aa78485087f860",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 80,
+        "wires": []
     },
     {
-        "id": "efbea8093e92ea7b",
-        "type": "ui_spacer",
-        "z": "ea5d4dd247fe2c99",
-        "name": "spacer",
-        "group": "13b2e486d9762afd",
+        "id": "9fb8f9ddf0bf1a32",
+        "type": "ui_table",
+        "z": "a9aa78485087f860",
+        "group": "30e1f2e7e2964dac",
+        "name": "snapd output",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 750,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "7a04e61505caa3c3",
+        "type": "function",
+        "z": "a9aa78485087f860",
+        "name": "extract snap info",
+        "func": "msg.payload = msg.payload.result;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 140,
+        "wires": [
+            [
+                "9fb8f9ddf0bf1a32"
+            ]
+        ]
+    },
+    {
+        "id": "fe5dbb7431a59111",
+        "type": "ui_button",
+        "z": "a9aa78485087f860",
+        "name": "refresh",
+        "group": "30e1f2e7e2964dac",
         "order": 1,
-        "width": 1,
-        "height": 1
-    },
-    {
-        "id": "3df6bc4c6c47ac6a",
-        "type": "ui_group",
-        "name": "Ambient",
-        "tab": "c1a63c15a73b6735",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": true
-    },
-    {
-        "id": "1c82bea1e5ecff62",
-        "type": "ui_group",
-        "name": "Buttons",
-        "tab": "862cabe5ab0b919d",
-        "order": 2,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "7d5e08888b02f065",
-        "type": "ui_group",
-        "name": "Vibrations",
-        "tab": "c1a63c15a73b6735",
-        "order": 3,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "9104abfcb776560f",
-        "type": "ui_group",
-        "name": "Power",
-        "tab": "862cabe5ab0b919d",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "b04138c01a45fbf1",
-        "type": "ui_group",
-        "name": "LEDs",
-        "tab": "862cabe5ab0b919d",
-        "order": 3,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "40addcbf9462c1d0",
-        "type": "ui_group",
-        "name": "Light",
-        "tab": "c1a63c15a73b6735",
-        "order": 2,
-        "disp": true,
-        "width": "6",
-        "collapse": false
-    },
-    {
-        "id": "c1a63c15a73b6735",
-        "type": "ui_tab",
-        "name": "Sensors",
-        "icon": "dashboard",
-        "order": 2,
-        "disabled": false,
-        "hidden": false
-    },
-    {
-        "id": "862cabe5ab0b919d",
-        "type": "ui_tab",
-        "name": "Device",
-        "icon": "dashboard",
-        "order": 1,
-        "disabled": false,
-        "hidden": false
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "refresh_app_list",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 160,
+        "y": 140,
+        "wires": [
+            [
+                "7fa903afbafef497"
+            ]
+        ]
     }
 ]
