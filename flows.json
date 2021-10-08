@@ -125,7 +125,7 @@
         "id": "d0835c77f34c9a66",
         "type": "ui_base",
         "theme": {
-            "name": "theme-light",
+            "name": "theme-custom",
             "lightTheme": {
                 "default": "#0094CE",
                 "baseColor": "#0094CE",
@@ -135,53 +135,55 @@
             },
             "darkTheme": {
                 "default": "#097479",
-                "baseColor": "#097479",
+                "baseColor": "#1e1018",
                 "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
-                "edited": false
+                "edited": true,
+                "reset": false
             },
             "customTheme": {
-                "name": "Untitled Theme 1",
+                "name": "Canonical",
                 "default": "#4B7930",
-                "baseColor": "#4B7930",
-                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                "baseColor": "#ffffff",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "reset": false
             },
             "themeState": {
                 "base-color": {
-                    "default": "#0094CE",
-                    "value": "#0094CE",
-                    "edited": false
+                    "default": "rgba(0, 0, 0, 0)",
+                    "value": "#ffffff",
+                    "edited": true
                 },
                 "page-titlebar-backgroundColor": {
-                    "value": "#0094CE",
-                    "edited": false
+                    "value": "rgba(0, 0, 0, 0)",
+                    "edited": true
                 },
                 "page-backgroundColor": {
-                    "value": "#fafafa",
-                    "edited": false
+                    "value": "#1e1018",
+                    "edited": true
                 },
                 "page-sidebar-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
+                    "value": "#1e1018",
+                    "edited": true
                 },
                 "group-textColor": {
-                    "value": "#1bbfff",
-                    "edited": false
+                    "value": "#ffffff",
+                    "edited": true
                 },
                 "group-borderColor": {
-                    "value": "#ffffff",
-                    "edited": false
+                    "value": "#740946",
+                    "edited": true
                 },
                 "group-backgroundColor": {
-                    "value": "#ffffff",
-                    "edited": false
+                    "value": "#740946",
+                    "edited": true
                 },
                 "widget-textColor": {
-                    "value": "#111111",
-                    "edited": false
+                    "value": "#000000",
+                    "edited": true
                 },
                 "widget-backgroundColor": {
-                    "value": "#0094ce",
-                    "edited": false
+                    "value": "#1e1018",
+                    "edited": true
                 },
                 "widget-borderColor": {
                     "value": "#ffffff",
@@ -223,7 +225,7 @@
         "type": "ui_group",
         "name": "App list",
         "tab": "057c895eb377e151",
-        "order": 1,
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": false,
@@ -237,6 +239,83 @@
         "order": 3,
         "disabled": false,
         "hidden": false
+    },
+    {
+        "id": "109afbd0c85d153d",
+        "type": "ui_group",
+        "name": "System Info",
+        "tab": "057c895eb377e151",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4b73adc4.5ffc3c",
+        "type": "ui_group",
+        "z": "a9aa78485087f860",
+        "name": "Test",
+        "tab": "",
+        "order": 1,
+        "disp": true,
+        "width": "6"
+    },
+    {
+        "id": "09091d45efb40a56",
+        "type": "ui_group",
+        "name": "Recovery Systems",
+        "tab": "057c895eb377e151",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ce67eef9da4c05b2",
+        "type": "ui_group",
+        "name": "Software update",
+        "tab": "057c895eb377e151",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "951f63e6.78df",
+        "type": "ui_group",
+        "name": "Garage",
+        "tab": "83822f15.889e6",
+        "order": 2,
+        "disp": false,
+        "width": "10"
+    },
+    {
+        "id": "83822f15.889e6",
+        "type": "ui_tab",
+        "name": "Garage",
+        "icon": "fa-car",
+        "order": 1,
+        "disabled": false,
+        "hidden": true
+    },
+    {
+        "id": "c519da4c.f6bf9",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "c63bab3.e433ad8",
+        "order": 1,
+        "disp": false,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "c63bab3.e433ad8",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard"
     },
     {
         "id": "2f94d031281d103a",
@@ -923,14 +1002,14 @@
         "type": "ui_table",
         "z": "a9aa78485087f860",
         "group": "30e1f2e7e2964dac",
-        "name": "snapd output",
+        "name": "App List",
         "order": 0,
         "width": 0,
         "height": 0,
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 750,
+        "x": 740,
         "y": 140,
         "wires": []
     },
@@ -957,7 +1036,7 @@
         "id": "fe5dbb7431a59111",
         "type": "ui_button",
         "z": "a9aa78485087f860",
-        "name": "refresh",
+        "name": "App List",
         "group": "30e1f2e7e2964dac",
         "order": 1,
         "width": 0,
@@ -966,7 +1045,7 @@
         "label": "refresh",
         "tooltip": "",
         "color": "",
-        "bgcolor": "",
+        "bgcolor": "#4e052e",
         "className": "",
         "icon": "",
         "payload": "refresh_app_list",
@@ -979,6 +1058,306 @@
             [
                 "7fa903afbafef497"
             ]
+        ]
+    },
+    {
+        "id": "9a2984d6ea84f543",
+        "type": "ui_button",
+        "z": "a9aa78485087f860",
+        "name": "System Info",
+        "group": "109afbd0c85d153d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#4e052e",
+        "className": "",
+        "icon": "",
+        "payload": "system_info",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "65c5aa7501ea4591"
+            ]
+        ]
+    },
+    {
+        "id": "65c5aa7501ea4591",
+        "type": "snapd",
+        "z": "a9aa78485087f860",
+        "name": "",
+        "x": 350,
+        "y": 200,
+        "wires": [
+            [
+                "42eea502addb9dcf",
+                "e1a1995c875abb75"
+            ]
+        ]
+    },
+    {
+        "id": "42eea502addb9dcf",
+        "type": "function",
+        "z": "a9aa78485087f860",
+        "name": "extract snap info",
+        "func": "text = \"<p>\" + \"Architecture : \" + msg.payload.result.architecture + \"</p>\";\ntext = text + \"<p>\" + \"Confinement : \" + msg.payload.result.confinement + \"</p>\";\ntext = text + \"<p>\" + \"Kernel Version : \" + msg.payload.result['kernel-version'] + \"</p>\";\ntext = text + \"<p>\" + \"Managed : \" + msg.payload.result.managed + \"</p>\";\ntext = text + \"<p>\" + \"On Classic : \" + msg.payload.result['on-classic'] + \"</p>\";\ntext = text + \"<p>\" + \"OS id : \" + msg.payload.result['os-release'].id + \"</p>\";\ntext = text + \"<p>\" + \"OS version : \" + msg.payload.result['os-release']['version-id'] + \"</p>\";\ntext = text + \"<p>\" + \"Refresh timer : \" + msg.payload.result.refresh.timer + \"</p>\";\ntext = text + \"<p>\" + \"Refresh last : \" + msg.payload.result.refresh.last + \"</p>\";\ntext = text + \"<p>\" + \"Series : \" + msg.payload.result.series + \"</p>\";\ntext = text + \"<p>\" + \"System Mode : \" + msg.payload.result['system-mode'] + \"</p>\";\ntext = text + \"<p>\" + \"Version : \" + msg.payload.result.version + \"</p>\";\nmsg.payload = text;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 200,
+        "wires": [
+            [
+                "37016def337b7930"
+            ]
+        ]
+    },
+    {
+        "id": "37016def337b7930",
+        "type": "ui_text",
+        "z": "a9aa78485087f860",
+        "group": "109afbd0c85d153d",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 730,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "479f73ade3b69225",
+        "type": "ui_button",
+        "z": "a9aa78485087f860",
+        "name": "Recovery Systems",
+        "group": "09091d45efb40a56",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#4e052e",
+        "className": "",
+        "icon": "",
+        "payload": "systems",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 260,
+        "wires": [
+            [
+                "aa05f63e277d5420"
+            ]
+        ]
+    },
+    {
+        "id": "aa05f63e277d5420",
+        "type": "snapd",
+        "z": "a9aa78485087f860",
+        "name": "",
+        "x": 350,
+        "y": 260,
+        "wires": [
+            [
+                "e1a1995c875abb75",
+                "fd82614b0ebc3b03"
+            ]
+        ]
+    },
+    {
+        "id": "bec6b40bf35b4374",
+        "type": "ui_table",
+        "z": "a9aa78485087f860",
+        "group": "09091d45efb40a56",
+        "name": "Recovery Systems List",
+        "order": 0,
+        "width": "0",
+        "height": "0",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 800,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "fd82614b0ebc3b03",
+        "type": "function",
+        "z": "a9aa78485087f860",
+        "name": "extract snap info",
+        "func": "var obj = [];\nvar systems = {current: \"\", label: \"\", model: \"\", \"brand-id\": \"\"};\n//, \"display-name\": \"\", \"brand-username\": \"\", \"brand-display-name\": \"\", \"brand-validation\": \"\"}; \n\nobj[0]= systems;\n\nobj[0].current = msg.payload.result.systems[0].current;\nobj[0].label = msg.payload.result.systems[0].label;\nobj[0].model = msg.payload.result.systems[0].model.model;\nobj[0]['brand-id'] = msg.payload.result.systems[0].model['brand-id'];\n//obj[0]['display-name'] = msg.payload.result.systems[0].model['display-name'];\n//obj[0]['brand-username'] = msg.payload.result.systems[0].brand['username'];\n//obj[0]['brand-display-name'] = msg.payload.result.systems[0].brand['display-name'];\n//obj[0]['brand-validation'] = msg.payload.result.systems[0].brand['validation'];\n\nmsg.payload = obj;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 260,
+        "wires": [
+            [
+                "bec6b40bf35b4374"
+            ]
+        ]
+    },
+    {
+        "id": "72f54c159211a21c",
+        "type": "ui_button",
+        "z": "a9aa78485087f860",
+        "name": "Update node-red",
+        "group": "ce67eef9da4c05b2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Update node-red",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#4e052e",
+        "className": "",
+        "icon": "",
+        "payload": "update_nodered",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 320,
+        "wires": [
+            [
+                "2bf61767e25ff509"
+            ]
+        ]
+    },
+    {
+        "id": "86edd06c1062f204",
+        "type": "ui_button",
+        "z": "a9aa78485087f860",
+        "name": "Update iot-agent",
+        "group": "ce67eef9da4c05b2",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Update iot-agent",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#4e052e",
+        "className": "",
+        "icon": "",
+        "payload": "update_iotagent",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 190,
+        "y": 380,
+        "wires": [
+            [
+                "e84ed4d348068658"
+            ]
+        ]
+    },
+    {
+        "id": "2bf61767e25ff509",
+        "type": "snapd",
+        "z": "a9aa78485087f860",
+        "name": "",
+        "x": 350,
+        "y": 320,
+        "wires": [
+            [
+                "3c3c185fa78a3f82",
+                "e1a1995c875abb75"
+            ]
+        ]
+    },
+    {
+        "id": "e84ed4d348068658",
+        "type": "snapd",
+        "z": "a9aa78485087f860",
+        "name": "",
+        "x": 350,
+        "y": 380,
+        "wires": [
+            [
+                "3c3c185fa78a3f82",
+                "e1a1995c875abb75"
+            ]
+        ]
+    },
+    {
+        "id": "3c3c185fa78a3f82",
+        "type": "ui_text",
+        "z": "a9aa78485087f860",
+        "group": "ce67eef9da4c05b2",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "name": "",
+        "label": "",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 750,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ff28f78e.f7d758",
+        "type": "ui_template",
+        "z": "a9aa78485087f860",
+        "group": "c519da4c.f6bf9",
+        "name": "Logo / Clock",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "format": "<script id=\"clockScript1\" type=\"text/javascript\">\n    var clockInterval;\n    $(function () {\n        if (clockInterval) return;\n\n        //add logo\n        var div1 = $('<div/>');\n        var logo = new Image();\n\n        logo.src = '/uimedia/canonical_logo/Canonical_logo_white.png'\n        logo.height = 45;\n        div1[0].style.margin = '10px auto';\n\n        div1.append(logo);\n\n        //add clock\n        var div2 = $('<div/>');\n        var p = $('<p/>');\n\n        div2.append(p);\n        div2[0].style.margin = '5px';\n\n        function displayTime() {\n            p.text(new Date().toLocaleString());\n        }\n        \n        clockInterval = setInterval(displayTime, 1000);\n\n        //add to toolbar when it's available\n        var addToToolbarTimer;\n        \n        function addToToolbar() {\n            var toolbar = $('.md-toolbar-tools');\n            \n            if(!toolbar.length) return;\n            \n            toolbar.append(div1);\n            //toolbar.append(div2); //don't want clock\n            clearInterval(addToToolbarTimer);\n        }\n        addToToolbarTimer = setInterval(addToToolbar, 100);\n    });\n</script>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "global",
+        "className": "",
+        "x": 630,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f1772b8e7cddb8de",
+        "type": "ui_media",
+        "z": "a9aa78485087f860",
+        "group": "951f63e6.78df",
+        "name": "",
+        "width": 0,
+        "height": 0,
+        "order": 2,
+        "category": "canonical_logo",
+        "file": "Canonical_logo_white.png",
+        "layout": "adjust",
+        "showcontrols": true,
+        "loop": true,
+        "onstart": false,
+        "scope": "local",
+        "tooltip": "",
+        "x": 440,
+        "y": 500,
+        "wires": [
+            []
         ]
     }
 ]
