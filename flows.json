@@ -14,6 +14,22 @@
         "info": ""
     },
     {
+        "id": "6f115337e98614cb",
+        "type": "tab",
+        "label": "EdgeX configuration",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "085a1f4e80349b48",
+        "type": "tab",
+        "label": "Grafana configuration",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "3df6bc4c6c47ac6a",
         "type": "ui_group",
         "name": "Ambient",
@@ -312,34 +328,12 @@
         "className": ""
     },
     {
-        "id": "643ab30d6d162d43",
-        "type": "ui_spacer",
-        "z": "a9aa78485087f860",
-        "name": "spacer",
-        "group": "d83db01cdc44c383",
-        "order": 6,
-        "width": "7",
-        "height": 1,
-        "className": ""
-    },
-    {
-        "id": "6ebdf18c177fc006",
-        "type": "ui_spacer",
-        "z": "a9aa78485087f860",
-        "name": "spacer",
-        "group": "d83db01cdc44c383",
-        "order": 4,
-        "width": "15",
-        "height": 1,
-        "className": ""
-    },
-    {
         "id": "a5b7700cd13ad9ad",
         "type": "ui_spacer",
         "z": "a9aa78485087f860",
         "name": "spacer",
         "group": "b6d58ead5da9d7a0",
-        "order": 6,
+        "order": 10,
         "width": "7",
         "height": 1,
         "className": ""
@@ -348,22 +342,55 @@
         "id": "3e13a5cb1097daed",
         "type": "ui_spacer",
         "z": "a9aa78485087f860",
+        "d": true,
         "name": "spacer",
         "group": "b6d58ead5da9d7a0",
-        "order": 2,
-        "width": 1,
-        "height": 1
+        "order": 3,
+        "width": "1",
+        "height": "1"
     },
     {
         "id": "41f30851e6cb7102",
         "type": "ui_group",
-        "name": "BLE Status",
+        "name": "Device Status",
         "tab": "862cabe5ab0b919d",
         "order": 4,
         "disp": true,
         "width": "6",
         "collapse": false,
         "className": ""
+    },
+    {
+        "id": "107bea2243db3d7c",
+        "type": "ui_spacer",
+        "z": "a9aa78485087f860",
+        "d": true,
+        "name": "spacer",
+        "group": "b6d58ead5da9d7a0",
+        "order": 8,
+        "width": "15",
+        "height": "1"
+    },
+    {
+        "id": "6b0d2535eae0df21",
+        "type": "ui_group",
+        "name": "RESPONSE",
+        "tab": "44e8f608ffa1c0d1",
+        "order": 3,
+        "disp": true,
+        "width": "15",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f29d19c5fd16e2af",
+        "type": "ui_spacer",
+        "z": "a9aa78485087f860",
+        "name": "spacer",
+        "group": "6b0d2535eae0df21",
+        "order": 3,
+        "width": "7",
+        "height": "1"
     },
     {
         "id": "2f94d031281d103a",
@@ -387,9 +414,9 @@
         "wires": [
             [
                 "351f04c959ed7a95",
-                "87e556072cc93f2c",
                 "5e9b0e9ef91a8625",
-                "c06bb902a950c4cb"
+                "c06bb902a950c4cb",
+                "87e556072cc93f2c"
             ]
         ]
     },
@@ -433,7 +460,7 @@
         "seg1": "",
         "seg2": "",
         "x": 530,
-        "y": 660,
+        "y": 640,
         "wires": []
     },
     {
@@ -800,8 +827,8 @@
         ],
         "seg1": "",
         "seg2": "",
-        "x": 550,
-        "y": 460,
+        "x": 530,
+        "y": 500,
         "wires": []
     },
     {
@@ -1030,7 +1057,7 @@
         "type": "function",
         "z": "ea5d4dd247fe2c99",
         "name": "prepare POST for EdgeX",
-        "func": "var apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'temperature'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload.ambient\n\nmsg.url = 'http://localhost:59880/api/v2/event/Sensortag-Profile/sensortag1/' + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
+        "func": "var coredata_url = \"http://localhost:59880/api/v2/\"\nvar apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'temperature'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload.ambient\n\nmsg.url = coredata_url + \"event/Sensortag-Profile/sensortag1/\" + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1091,7 +1118,7 @@
         "type": "function",
         "z": "ea5d4dd247fe2c99",
         "name": "prepare POST for EdgeX",
-        "func": "var apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'humidity'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload.humidity\n\nmsg.url = 'http://localhost:59880/api/v2/event/Sensortag-Profile/sensortag1/' + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
+        "func": "var coredata_url = \"http://localhost:59880/api/v2/\"\nvar apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'humidity'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload.humidity\n\nmsg.url = coredata_url + \"event/Sensortag-Profile/sensortag1/\" + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1152,7 +1179,7 @@
         "type": "function",
         "z": "ea5d4dd247fe2c99",
         "name": "prepare POST for EdgeX",
-        "func": "var apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'accelerometer_' + msg.topic\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload\n\nmsg.url = 'http://localhost:59880/api/v2/event/Sensortag-Profile/sensortag1/' + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
+        "func": "var coredata_url = \"http://localhost:59880/api/v2/\"\nvar apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'accelerometer_' + msg.topic\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload\n\nmsg.url = coredata_url + \"event/Sensortag-Profile/sensortag1/\" + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1213,7 +1240,7 @@
         "type": "function",
         "z": "ea5d4dd247fe2c99",
         "name": "prepare POST for EdgeX",
-        "func": "var apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'luxometer'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload\n\nmsg.url = 'http://localhost:59880/api/v2/event/Sensortag-Profile/sensortag1/' + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
+        "func": "var coredata_url = \"http://localhost:59880/api/v2/\"\nvar apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'luxometer'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload\n\nmsg.url = coredata_url + \"event/Sensortag-Profile/sensortag1/\" + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1274,18 +1301,17 @@
         "type": "function",
         "z": "ea5d4dd247fe2c99",
         "name": "prepare POST for EdgeX",
-        "func": "var apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'batteryLevel'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload.val\n\nmsg.url = 'http://localhost:59880/api/v2/event/Sensortag-Profile/sensortag1/' + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
+        "func": "var coredata_url = \"http://localhost:59880/api/v2/\"\nvar apiVersion = '\"v2\"'\nvar uuid = global.get(\"uuid\")\nvar uuid1 = uuid.v4()\nvar uuid2 = uuid.v4()\nvar date = new Date()\nvar timestamp = date.getTime()*1000000\n\nvar profileName = '\"Sensortag-Profile\"'\nvar deviceName = '\"sensortag1\"'\nvar serviceUrl = 'batteryLevel'\nvar sourceName = '\"' + serviceUrl + '\"'\nvar resourceName = '\"' + serviceUrl + '\"'\nvar valueType = '\"Float32\"'\nvar value = msg.payload.val\n\nmsg.url = coredata_url + \"event/Sensortag-Profile/sensortag1/\" + serviceUrl\nmsg.payload = '{\"apiVersion\": ' + apiVersion +', \"event\": ' +\n                   '{\"apiVersion\": ' + apiVersion + ',' +\n                    '\"deviceName\": '+ deviceName + ',' +\n                    '\"profileName\": ' + profileName + ',' +\n                    '\"sourceName\": ' + sourceName + ',' +\n                    '\"id\":\"' + uuid1 +'\",' +\n                    '\"origin\": ' + timestamp + ',' +\n                    '\"readings\": ' +\n                         '[{\"id\":\"' + uuid2 + '\",' +\n                           '\"origin\": ' + timestamp + ',' +\n                           '\"deviceName\": ' + deviceName + ',' + \n                           '\"resourceName\": ' + resourceName + ',' +\n                           '\"profileName\": ' + profileName + ',' +\n                           '\"valueType\": ' + valueType + ',' +\n                           '\"value\": \"' + value + '\"' +\n                           '}]}}'\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
         "x": 770,
-        "y": 500,
+        "y": 540,
         "wires": [
             [
-                "a108b4e3309119cb",
-                "84a5fc2733da4f1e"
+                "a108b4e3309119cb"
             ]
         ]
     },
@@ -1305,30 +1331,11 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 1010,
-        "y": 500,
+        "x": 990,
+        "y": 540,
         "wires": [
-            [
-                "84a5fc2733da4f1e"
-            ]
+            []
         ]
-    },
-    {
-        "id": "84a5fc2733da4f1e",
-        "type": "debug",
-        "z": "ea5d4dd247fe2c99",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "payload",
-        "targetType": "msg",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 1170,
-        "y": 460,
-        "wires": []
     },
     {
         "id": "2436c0b5719f36d9",
@@ -1360,38 +1367,21 @@
         ]
     },
     {
-        "id": "e3eb76ead4b61e90",
-        "type": "ui_text",
-        "z": "ea5d4dd247fe2c99",
-        "group": "41f30851e6cb7102",
-        "order": 1,
-        "width": "6",
-        "height": "1",
-        "name": "BLE Status",
-        "label": "",
-        "format": "<font color= {{msg.color}} > {{msg.payload.status}} </font>",
-        "layout": "row-left",
-        "className": "",
-        "x": 1150,
-        "y": 40,
-        "wires": []
-    },
-    {
         "id": "5e9b0e9ef91a8625",
         "type": "function",
         "z": "ea5d4dd247fe2c99",
-        "name": "filter and colorize",
-        "func": "if (msg.payload.status == 'connected') {\n    msg.color = 'green'; \n     msg.payload.status = 'connected to ' + msg.payload.device;\n    return msg;\n}else {\n    if (msg.payload.status == 'connecting') {\n        msg.color = 'darkOrange'; \n        msg.payload.status = 'connecting to ' + msg.payload.device;\n        return msg;\n    }else {\n        if (msg.payload.status == 'disconnected') {\n            msg.color = 'red'; \n            return msg;\n        } else {\n            if (msg.payload.status == 'discovering') {\n                msg.color = 'blue'; \n                msg.payload.status = 'discovering ...';\n                return msg;\n            }\n        }\n    }  \n}",
+        "name": "filter data",
+        "func": "if (msg.payload.status == 'connected') {\n    msg.payload = 'connected';\n    return msg;\n}else {\n    if (msg.payload.status == 'connecting') {\n        msg.payload = 'connecting';\n        return msg;\n    }else {\n        if (msg.payload.status == 'disconnected') {\n            msg.payload = 'disconnected'; \n            return msg;\n        } else {\n            if (msg.payload.status == 'discovering') {\n                msg.payload = 'discovering';\n                return msg;\n            }\n        }\n    }  \n}",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 750,
+        "x": 720,
         "y": 40,
         "wires": [
             [
-                "e3eb76ead4b61e90"
+                "6c1b111ba3323868"
             ]
         ]
     },
@@ -1401,11 +1391,11 @@
         "z": "ea5d4dd247fe2c99",
         "name": "Reconnect",
         "group": "41f30851e6cb7102",
-        "order": 3,
+        "order": 2,
         "width": 0,
         "height": 0,
         "passthru": false,
-        "label": "RECONNECT",
+        "label": "RECONNECT SENSOR",
         "tooltip": "",
         "color": "",
         "bgcolor": "#4e052e",
@@ -1427,7 +1417,7 @@
         "id": "fada3566e7df2acc",
         "type": "ui_led",
         "z": "ea5d4dd247fe2c99",
-        "order": 2,
+        "order": 3,
         "group": "41f30851e6cb7102",
         "width": 0,
         "height": 0,
@@ -1551,8 +1541,8 @@
         "z": "ea5d4dd247fe2c99",
         "name": "EdgeX Integration",
         "info": "",
-        "x": 790,
-        "y": 440,
+        "x": 750,
+        "y": 360,
         "wires": []
     },
     {
@@ -1561,8 +1551,585 @@
         "z": "ea5d4dd247fe2c99",
         "name": "node-red GUI",
         "info": "",
-        "x": 550,
+        "x": 530,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "16552d15059418bb",
+        "type": "inject",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 750,
         "y": 400,
+        "wires": [
+            [
+                "4cfff32bbc229c75"
+            ]
+        ]
+    },
+    {
+        "id": "1484cd633c90cb39",
+        "type": "http request",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "50a4e0cfd404b8c8"
+            ]
+        ]
+    },
+    {
+        "id": "4cfff32bbc229c75",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Prepare url",
+        "func": "msg.url = \"http://localhost:1880/\" + \"ping_edgex_core_metadata\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 400,
+        "wires": [
+            [
+                "1484cd633c90cb39"
+            ]
+        ]
+    },
+    {
+        "id": "b4d12f8529373b45",
+        "type": "inject",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 750,
+        "y": 440,
+        "wires": [
+            [
+                "59e4b9d3f595b00c"
+            ]
+        ]
+    },
+    {
+        "id": "f3ac3abe45ce6b33",
+        "type": "http request",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1070,
+        "y": 440,
+        "wires": [
+            [
+                "284ed856203bf96b"
+            ]
+        ]
+    },
+    {
+        "id": "59e4b9d3f595b00c",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Prepare url",
+        "func": "msg.url = \"http://localhost:1880/\" + \"ping_edgex_core_data\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 910,
+        "y": 440,
+        "wires": [
+            [
+                "f3ac3abe45ce6b33"
+            ]
+        ]
+    },
+    {
+        "id": "83518aa2371aa085",
+        "type": "ui_led",
+        "z": "ea5d4dd247fe2c99",
+        "order": 4,
+        "group": "41f30851e6cb7102",
+        "width": 0,
+        "height": 0,
+        "label": "EdgeX Core Metadata",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "EdgeX Core Data Service Status ",
+        "x": 1500,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "a61a292bc62ac45a",
+        "type": "ui_led",
+        "z": "ea5d4dd247fe2c99",
+        "order": 5,
+        "group": "41f30851e6cb7102",
+        "width": 0,
+        "height": 0,
+        "label": "EdgeX Core Data ",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "EdgeX Core Data Service Status ",
+        "x": 1500,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "50a4e0cfd404b8c8",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "led function",
+        "func": "if ( msg.statusCode === 200)\n    msg.payload = true\nelse\n    msg.payload = false\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 400,
+        "wires": [
+            [
+                "83518aa2371aa085"
+            ]
+        ]
+    },
+    {
+        "id": "284ed856203bf96b",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "led function",
+        "func": "if ( msg.statusCode === 200)\n    msg.payload = true\nelse\n    msg.payload = false\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1250,
+        "y": 440,
+        "wires": [
+            [
+                "a61a292bc62ac45a"
+            ]
+        ]
+    },
+    {
+        "id": "6c1b111ba3323868",
+        "type": "ui_led",
+        "z": "ea5d4dd247fe2c99",
+        "order": 1,
+        "group": "41f30851e6cb7102",
+        "width": 0,
+        "height": 0,
+        "label": "BLE Status",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "connected",
+                "valueType": "str"
+            },
+            {
+                "color": "#ffa500",
+                "value": "connecting",
+                "valueType": "str"
+            },
+            {
+                "color": "#ff0000",
+                "value": "disconnected",
+                "valueType": "str"
+            },
+            {
+                "color": "#0000ff",
+                "value": "discovering",
+                "valueType": "str"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "BLE Status",
+        "x": 1150,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "0c451049247d9efc",
+        "type": "comment",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Grafana Integration",
+        "info": "",
+        "x": 750,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "b7453b7ff6672175",
+        "type": "inject",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "3",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 730,
+        "y": 1180,
+        "wires": [
+            [
+                "a928fdada2b655e1"
+            ]
+        ]
+    },
+    {
+        "id": "5e2427aae1fe6002",
+        "type": "http request",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1050,
+        "y": 1180,
+        "wires": [
+            [
+                "c220d5b5c3ea2154"
+            ]
+        ]
+    },
+    {
+        "id": "a928fdada2b655e1",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Prepare url",
+        "func": "msg.url = global.get(\"grafana_protocol\") + global.get(\"grafana_admin\") + \"@\" + global.get(\"grafana_host\") + \":\" + global.get(\"grafana_port\") + \"/api/health\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 1180,
+        "wires": [
+            [
+                "5e2427aae1fe6002"
+            ]
+        ]
+    },
+    {
+        "id": "ac677b4f6e8af3ec",
+        "type": "ui_led",
+        "z": "ea5d4dd247fe2c99",
+        "order": 6,
+        "group": "41f30851e6cb7102",
+        "width": 0,
+        "height": 0,
+        "label": "Grafana",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#008000",
+                "value": "true",
+                "valueType": "bool"
+            },
+            {
+                "color": "#ff0000",
+                "value": "false",
+                "valueType": "bool"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "Grafana Health",
+        "x": 1420,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "c220d5b5c3ea2154",
+        "type": "function",
+        "z": "ea5d4dd247fe2c99",
+        "name": "led function",
+        "func": "if ( msg.statusCode === 200)\n    msg.payload = true\nelse\n    msg.payload = false\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 1180,
+        "wires": [
+            [
+                "ac677b4f6e8af3ec"
+            ]
+        ]
+    },
+    {
+        "id": "86813e80ade3aad6",
+        "type": "ui_button",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Open Grafana dashboard 1",
+        "group": "41f30851e6cb7102",
+        "order": 7,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "Grafana dashboard 1",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "db1",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 780,
+        "y": 1240,
+        "wires": [
+            [
+                "1b7fce9a96e9652e"
+            ]
+        ]
+    },
+    {
+        "id": "4f7526c75666b5a4",
+        "type": "ui_template",
+        "z": "ea5d4dd247fe2c99",
+        "group": "41f30851e6cb7102",
+        "name": "window redirect",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "format": "<script>\n(function(scope) {\n    scope.$watch('msg.payload', function(data) {\n        if (data == \"db1\") {\n          window.open(\"http://\" + window.location.hostname + \":3000/d/TyoT6kigj\", \"_blank\");\n        } \n        if (data == \"db2\") {\n          window.open(\"http://\" + window.location.hostname + \":3000/d/TyoT6kigh\", \"_blank\");\n        }\n    });\n})(scope);\n</script>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1180,
+        "y": 1260,
+        "wires": [
+            [
+                "71f2ad0d3f19c58e"
+            ]
+        ]
+    },
+    {
+        "id": "1b7fce9a96e9652e",
+        "type": "trigger",
+        "z": "ea5d4dd247fe2c99",
+        "name": "reset msg",
+        "op1": "",
+        "op2": "empty",
+        "op1type": "pay",
+        "op2type": "str",
+        "duration": "250",
+        "extend": false,
+        "overrideDelay": false,
+        "units": "ms",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1000,
+        "y": 1260,
+        "wires": [
+            [
+                "4f7526c75666b5a4"
+            ]
+        ]
+    },
+    {
+        "id": "71f2ad0d3f19c58e",
+        "type": "debug",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1350,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "1a99954e8adb443c",
+        "type": "ui_button",
+        "z": "ea5d4dd247fe2c99",
+        "name": "Open Grafana dashboard 2",
+        "group": "41f30851e6cb7102",
+        "order": 7,
+        "width": "0",
+        "height": "0",
+        "passthru": false,
+        "label": "Grafana dashboard 2",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "db2",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 780,
+        "y": 1300,
+        "wires": [
+            [
+                "1b7fce9a96e9652e"
+            ]
+        ]
+    },
+    {
+        "id": "2f46a1218fd245cd",
+        "type": "inject",
+        "z": "ea5d4dd247fe2c99",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 1300,
+        "y": 820,
+        "wires": [
+            [
+                "9dd5c1ceb1948956"
+            ]
+        ]
+    },
+    {
+        "id": "9dd5c1ceb1948956",
+        "type": "debug",
+        "z": "ea5d4dd247fe2c99",
+        "name": "debug 10",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1480,
+        "y": 820,
         "wires": []
     },
     {
@@ -1790,7 +2357,7 @@
         "columns": [],
         "outputs": 0,
         "cts": false,
-        "x": 800,
+        "x": 780,
         "y": 260,
         "wires": []
     },
@@ -1991,7 +2558,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1010,
+        "x": 790,
         "y": 500,
         "wires": [
             [
@@ -2050,8 +2617,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1100,
-        "y": 560,
+        "x": 1000,
+        "y": 500,
         "wires": [
             [
                 "c748be29.1c57"
@@ -2150,7 +2717,7 @@
         "tbodyStyle": "width:100%;",
         "trStyle": "width:100%;",
         "tdStyle": "text-align:left;vertical-align:top;width:100%;",
-        "x": 1130,
+        "x": 1370,
         "y": 940,
         "wires": [
             [
@@ -2171,27 +2738,27 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1330,
-        "y": 880,
+        "x": 1570,
+        "y": 820,
         "wires": []
     },
     {
         "id": "8379ae0aa5ec31cd",
         "type": "ui_template",
         "z": "a9aa78485087f860",
-        "group": "d83db01cdc44c383",
+        "group": "6b0d2535eae0df21",
         "name": "Response",
-        "order": 9,
+        "order": 1,
         "width": "15",
-        "height": "10",
+        "height": "9",
         "format": "<div ng-bind-html=\"msg.payload\"></div>",
         "storeOutMessages": true,
         "fwdInMessages": true,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 1320,
-        "y": 940,
+        "x": 1560,
+        "y": 980,
         "wires": [
             []
         ]
@@ -2201,11 +2768,12 @@
         "type": "snapd",
         "z": "a9aa78485087f860",
         "name": "",
-        "x": 950,
+        "x": 1190,
         "y": 940,
         "wires": [
             [
-                "53c63552ceb7d473"
+                "53c63552ceb7d473",
+                "9aadfcd46fc0f2c1"
             ]
         ]
     },
@@ -2238,8 +2806,8 @@
         "y": 1040,
         "wires": [
             [
-                "466d602ab9eb0471",
-                "18f40898ca42ea65"
+                "18f40898ca42ea65",
+                "8379ae0aa5ec31cd"
             ]
         ]
     },
@@ -2247,9 +2815,10 @@
         "id": "466d602ab9eb0471",
         "type": "ui_template",
         "z": "a9aa78485087f860",
+        "d": true,
         "group": "b6d58ead5da9d7a0",
         "name": "Response",
-        "order": 9,
+        "order": 7,
         "width": "15",
         "height": "10",
         "format": "<div ng-bind-html=\"msg.payload\"></div>",
@@ -2259,7 +2828,7 @@
         "templateScope": "local",
         "className": "",
         "x": 1560,
-        "y": 1040,
+        "y": 1060,
         "wires": [
             []
         ]
@@ -2288,20 +2857,19 @@
         "id": "4a47f154a479c838",
         "type": "function",
         "z": "a9aa78485087f860",
-        "name": "text",
-        "func": "var body    = context.get(\"body\") || 0;\n\nif(msg.topic === \"body\"){\n    data = msg.payload;\n    context.set(\"body\",data);\n    //if no output is needed while writting, stop the flow right here\n    return\n}\nif(msg.topic === \"post\"){\n    msg.topic = \"snapd_rest_api_post\";\n    msg.payload = \"{ \\\"command\\\":  \\\"\" + msg.payload + \"\\\" , \\\"body\\\":  \" + body + \"}\";\n    msg.payload = JSON.parse(msg.payload);\n}\nif(msg.topic === \"put\"){\n    msg.topic = \"snapd_rest_api_put\";\n    msg.payload = \"{ \\\"command\\\":  \\\"\" + msg.payload + \"\\\" , \\\"body\\\":  \" + body + \"}\";\n    msg.payload = JSON.parse(msg.payload);\n}\n\nreturn msg;",
+        "name": "post-put",
+        "func": "/*var body    = context.get(\"body\") || 0;\n\nif(msg.topic === \"body\"){\n    data = msg.payload;\n    context.set(\"body\",data);\n    //if no output is needed while writting, stop the flow right here\n    return\n}*/\nvar str = msg.body;\nif(msg.topic === \"post\"){\n    msg.topic = \"snapd_rest_api_post\";\n    if (msg.payload.match(/\\/v2\\/assertions[\\/]+/g)) {\n        str = str.replace(/\\n|\\r\\n|\\r/g, '\\\\n');\n        node.warn(str);\n        msg.payload = \"{ \\\"command\\\":  \\\"\" + msg.payload + \"\\\" , \\\"body\\\":  \\\"\" + str + \"\\\"}\";\n        msg.payload = JSON.parse(msg.payload);\n    }\n    else {\n        // str = str.replace(/\\n|\\r\\n|\\r/g, '\\\\n');\n        node.warn(str);\n        msg.payload = \"{ \\\"command\\\":  \\\"\" + msg.payload + \"\\\" , \\\"body\\\":  \" + str + \"}\";\n        msg.payload = JSON.parse(msg.payload);\n    }\n}\nif(msg.topic === \"put\"){\n    msg.topic = \"snapd_rest_api_put\";\n    msg.payload = \"{ \\\"command\\\":  \\\"\" + msg.payload + \"\\\" , \\\"body\\\":  \" + msg.body + \"}\";\n    msg.payload = JSON.parse(msg.payload);\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1030,
+        "x": 800,
         "y": 1040,
         "wires": [
             [
                 "18f40898ca42ea65",
-                "4702a8ad2c53534c",
-                "969b12b1ae677c6b"
+                "4702a8ad2c53534c"
             ]
         ]
     },
@@ -2309,11 +2877,12 @@
         "id": "00e6397cec64b5d7",
         "type": "ui_text_input",
         "z": "a9aa78485087f860",
+        "d": true,
         "name": "",
         "label": "body",
         "tooltip": "",
         "group": "b6d58ead5da9d7a0",
-        "order": 4,
+        "order": 5,
         "width": 0,
         "height": 0,
         "passthru": true,
@@ -2321,6 +2890,7 @@
         "delay": 300,
         "topic": "body",
         "sendOnBlur": true,
+        "className": "",
         "topicType": "str",
         "x": 890,
         "y": 1120,
@@ -2369,7 +2939,7 @@
         "z": "a9aa78485087f860",
         "group": "d83db01cdc44c383",
         "name": "Autocomplete",
-        "order": 2,
+        "order": 1,
         "width": "0",
         "height": "0",
         "format": "<table>\n    <tr>\n        <td height=\"90\" width=\"220\"><md-autocomplete md-no-cache=\"true\" md-selected-item=\"selectedItem\" md-items=\"items in msg.options | filter:searchText\" md-select-on-match=\"true\"  md-search-text=\"searchText\" placeholder=\"{{msg.topic}}\" >\n        <span ng-bind=\"items\"></span></md-autocomplete></td>\n        <td><button style=\"text-align:center; height:40px;\" ng-click=\"msg.payload = searchText; send(msg)\">GET</button></td>\n    </tr>\n</table>",
@@ -2393,8 +2963,11 @@
         "z": "a9aa78485087f860",
         "name": "",
         "active": false,
-        "console": "false",
+        "tosidebar": true,
+        "console": false,
         "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
         "x": 950,
         "y": 800,
         "wires": []
@@ -2433,9 +3006,6 @@
         "name": "",
         "props": [
             {
-                "p": "payload"
-            },
-            {
                 "p": "topic",
                 "vt": "str"
             }
@@ -2445,9 +3015,7 @@
         "once": true,
         "onceDelay": "1",
         "topic": "/v2/",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
+        "x": 90,
         "y": 940,
         "wires": [
             [
@@ -2462,20 +3030,21 @@
         "group": "b6d58ead5da9d7a0",
         "name": "Autocomplete",
         "order": 1,
-        "width": "7",
-        "height": "2",
-        "format": "<table>\n    <tr>\n        <td height=\"90\" width=\"220\"><md-autocomplete md-no-cache=\"true\" md-selected-item=\"selectedItem\" md-items=\"items in msg.options | filter:searchText\" md-select-on-match=\"true\"  md-search-text=\"searchText\" placeholder=\"{{msg.topic}}\" >\n        <span ng-bind=\"items\"></span></md-autocomplete></td>\n        <td><button style=\"text-align:center; height:40px;\" ng-click=\"msg.payload = searchText; send(msg)\">POST</button></td>\n    </tr>\n</table>",
+        "width": "0",
+        "height": "0",
+        "format": "<table>\n    <tr>\n        <td style=\"height: 6em;\">\n            <md-autocomplete id=\"req_uri\" style=\"width: 35em;\" md-no-cache=\"true\" md-selected-item=\"selectedItem\" md-items=\"items in msg.options | filter:searchText\" md-select-on-match=\"true\"  md-search-text=\"searchText\" placeholder=\"{{msg.topic}}\" >\n                <span ng-bind=\"items\"></span>\n            </md-autocomplete>\n        </td>\n        <td>\n                <input type=\"radio\" id=\"req_post\" name=\"req_type\" value=\"post\" checked>\n                <label for=\"req_post\">POST</label>\n                <input type=\"radio\" id=\"req_put\" name=\"req_type\" value=\"put\">\n                <label for=\"req_put\">PUT</label>\n        </td>\n        <td><button style=\"text-align:center; height:40px;\" ng-click=\"send({topic:getTopic(), payload: searchText, body: getBody()})\">SEND</button></td>\n    </tr>\n</table>\n<table>\n    <tr>\n        <td>\n            <label for=\"text\">BODY</label>\n            <br>\n            <textarea id=\"req_body\" name=\"text\" rows=\"28\" cols=\"82\"></textarea>\n          <br/>\n        </td>\n    </tr>\n</table>\n<script>\n    (function(scope) {\n        \n        scope.getTopic = function() {\n            var req_post = document.getElementById(\"req_post\").checked;\n            var req_put = document.getElementById(\"req_put\").checked;\n            \n            if (req_post)\n                return \"post\";\n            \n            if (req_put)\n                return \"put\"; \n                \n            return \"post;\"\n        }\n    \n        scope.getBody = function () {\n            var req_body = document.getElementById(\"req_body\").value;\n            return req_body;\n        }\n            \n        scope.$watch('msg', function(msg) {\n            if (msg.payload === \"clear\") {\n                var req_body = document.getElementById(\"req_body\");\n                req_body.value=\"\";\n            } \n        });\n    })(scope);\n</script>\n",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": false,
         "templateScope": "local",
         "className": "",
         "x": 520,
-        "y": 1000,
+        "y": 1040,
         "wires": [
             [
                 "04e554d255b144b6",
-                "b41db3c200058836"
+                "4a47f154a479c838",
+                "4c3812c4de24bc05"
             ]
         ]
     },
@@ -2484,9 +3053,14 @@
         "type": "debug",
         "z": "a9aa78485087f860",
         "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "false",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
         "x": 730,
         "y": 1120,
         "wires": []
@@ -2511,7 +3085,7 @@
         "to": "",
         "reg": false,
         "x": 320,
-        "y": 1000,
+        "y": 1040,
         "wires": [
             [
                 "d5d2fd7265711b39"
@@ -2525,9 +3099,6 @@
         "name": "",
         "props": [
             {
-                "p": "payload"
-            },
-            {
                 "p": "topic",
                 "vt": "str"
             }
@@ -2537,9 +3108,7 @@
         "once": true,
         "onceDelay": "1",
         "topic": "/v2/",
-        "payload": "",
-        "payloadType": "date",
-        "x": 120,
+        "x": 90,
         "y": 1040,
         "wires": [
             [
@@ -2553,8 +3122,8 @@
         "type": "ui_button",
         "z": "a9aa78485087f860",
         "name": "",
-        "group": "d83db01cdc44c383",
-        "order": 7,
+        "group": "6b0d2535eae0df21",
+        "order": 4,
         "width": "4",
         "height": "1",
         "passthru": false,
@@ -2580,9 +3149,9 @@
         "id": "5e1f0081.6dc3c",
         "type": "ui_template",
         "z": "a9aa78485087f860",
-        "group": "d83db01cdc44c383",
+        "group": "6b0d2535eae0df21",
         "name": "window redirect",
-        "order": 8,
+        "order": 5,
         "width": 0,
         "height": 0,
         "format": "<script>\n(function(scope) {\n    scope.$watch('msg.payload', function(data) {\n        if (data == \"help\") {\n          window.open(\"https://snapcraft.io/docs/snapd-api\", \"_blank\");\n        } \n    });\n})(scope);\n</script>",
@@ -2646,7 +3215,7 @@
         "z": "a9aa78485087f860",
         "name": "",
         "group": "b6d58ead5da9d7a0",
-        "order": 7,
+        "order": 11,
         "width": "4",
         "height": "1",
         "passthru": false,
@@ -2674,7 +3243,7 @@
         "z": "a9aa78485087f860",
         "group": "b6d58ead5da9d7a0",
         "name": "window redirect",
-        "order": 8,
+        "order": 12,
         "width": 0,
         "height": 0,
         "format": "<script>\n(function(scope) {\n    scope.$watch('msg.payload', function(data) {\n        if (data == \"help\") {\n          window.open(\"https://snapcraft.io/docs/snapd-api\", \"_blank\");\n        } \n    });\n})(scope);\n</script>",
@@ -2737,36 +3306,8 @@
         "type": "ui_button",
         "z": "a9aa78485087f860",
         "name": "CLEAR",
-        "group": "d83db01cdc44c383",
-        "order": 5,
-        "width": "4",
-        "height": "1",
-        "passthru": false,
-        "label": "CLEAR",
-        "tooltip": "",
-        "color": "",
-        "bgcolor": "#4e052e",
-        "className": "",
-        "icon": "",
-        "payload": " ",
-        "payloadType": "str",
-        "topic": "",
-        "topicType": "str",
-        "x": 960,
-        "y": 860,
-        "wires": [
-            [
-                "53c63552ceb7d473"
-            ]
-        ]
-    },
-    {
-        "id": "0a4a7d5d54a5869b",
-        "type": "ui_button",
-        "z": "a9aa78485087f860",
-        "name": "CLEAR",
-        "group": "b6d58ead5da9d7a0",
-        "order": 5,
+        "group": "6b0d2535eae0df21",
+        "order": 2,
         "width": "4",
         "height": "1",
         "passthru": false,
@@ -2781,10 +3322,39 @@
         "topic": "",
         "topicType": "str",
         "x": 1200,
-        "y": 1120,
+        "y": 840,
         "wires": [
             [
-                "f8aa7045a3fb2000"
+                "53c63552ceb7d473"
+            ]
+        ]
+    },
+    {
+        "id": "0a4a7d5d54a5869b",
+        "type": "ui_button",
+        "z": "a9aa78485087f860",
+        "name": "CLEAR",
+        "group": "b6d58ead5da9d7a0",
+        "order": 9,
+        "width": "4",
+        "height": "1",
+        "passthru": false,
+        "label": "CLEAR",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "#4e052e",
+        "className": "",
+        "icon": "",
+        "payload": "clear",
+        "payloadType": "str",
+        "topic": "/v2/",
+        "topicType": "str",
+        "x": 340,
+        "y": 1000,
+        "wires": [
+            [
+                "d5d2fd7265711b39",
+                "04e554d255b144b6"
             ]
         ]
     },
@@ -2809,34 +3379,17 @@
         "wires": []
     },
     {
-        "id": "b41db3c200058836",
-        "type": "function",
-        "z": "a9aa78485087f860",
-        "name": "post",
-        "func": "msg.topic = \"post\"\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 790,
-        "y": 1000,
-        "wires": [
-            [
-                "4a47f154a479c838"
-            ]
-        ]
-    },
-    {
         "id": "969b12b1ae677c6b",
         "type": "debug",
         "z": "a9aa78485087f860",
+        "d": true,
         "name": "",
         "active": false,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
         "x": 1190,
@@ -2847,9 +3400,10 @@
         "id": "3ff6d917fbac152e",
         "type": "ui_template",
         "z": "a9aa78485087f860",
+        "d": true,
         "group": "b6d58ead5da9d7a0",
         "name": "Autocomplete",
-        "order": 3,
+        "order": 4,
         "width": "7",
         "height": "2",
         "format": "<table>\n    <tr>\n        <td height=\"90\" width=\"220\"><md-autocomplete md-no-cache=\"true\" md-selected-item=\"selectedItem\" md-items=\"items in msg.options | filter:searchText\" md-select-on-match=\"true\"  md-search-text=\"searchText\" placeholder=\"{{msg.topic}}\" >\n        <span ng-bind=\"items\"></span></md-autocomplete></td>\n        <td><button style=\"text-align:center; height:40px;\" ng-click=\"msg.payload = searchText; send(msg)\">PUT</button></td>\n    </tr>\n</table>",
@@ -2871,6 +3425,7 @@
         "id": "256012d051cdc867",
         "type": "function",
         "z": "a9aa78485087f860",
+        "d": true,
         "name": "put",
         "func": "msg.topic = \"put\"\nreturn msg;",
         "outputs": 1,
@@ -2890,6 +3445,7 @@
         "id": "19f236547c100110",
         "type": "change",
         "z": "a9aa78485087f860",
+        "d": true,
         "name": "",
         "rules": [
             {
@@ -2912,5 +3468,1285 @@
                 "3ff6d917fbac152e"
             ]
         ]
+    },
+    {
+        "id": "3193b6b7f5ec4f9a",
+        "type": "ui_template",
+        "z": "a9aa78485087f860",
+        "d": true,
+        "group": "b6d58ead5da9d7a0",
+        "name": "body",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "format": "      <label for=\"text\">body</label>\n      <br>\n      <textarea id=\"req_body\" name=\"text\" rows=\"28\" cols=\"82\"></textarea>\n      <br/>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 430,
+        "y": 820,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e8d12d5965342af5",
+        "type": "ui_dropdown",
+        "z": "a9aa78485087f860",
+        "d": true,
+        "name": "",
+        "label": "",
+        "tooltip": "",
+        "place": "POST",
+        "group": "b6d58ead5da9d7a0",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "POST",
+                "value": "post",
+                "type": "str"
+            },
+            {
+                "label": "PUT",
+                "value": "put",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 440,
+        "y": 780,
+        "wires": [
+            [
+                "a3c04dacdbfa63f5"
+            ]
+        ]
+    },
+    {
+        "id": "a3c04dacdbfa63f5",
+        "type": "function",
+        "z": "a9aa78485087f860",
+        "d": true,
+        "name": "Set rest_api_req",
+        "func": "global.set(\"rest_api_req\",msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4c3812c4de24bc05",
+        "type": "debug",
+        "z": "a9aa78485087f860",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "body",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "bdf8bbd82ec1bf2b",
+        "type": "catch",
+        "z": "a9aa78485087f860",
+        "name": "post-put error handler",
+        "scope": [
+            "4a47f154a479c838"
+        ],
+        "uncaught": false,
+        "x": 840,
+        "y": 1000,
+        "wires": [
+            [
+                "79ec8d4430d1c3dd"
+            ]
+        ]
+    },
+    {
+        "id": "7cf847f87d271b3a",
+        "type": "ui_toast",
+        "z": "a9aa78485087f860",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "show error",
+        "x": 1250,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "79ec8d4430d1c3dd",
+        "type": "function",
+        "z": "a9aa78485087f860",
+        "name": "get error message",
+        "func": "msg.payload = msg.error.message;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 1000,
+        "wires": [
+            [
+                "7cf847f87d271b3a"
+            ]
+        ]
+    },
+    {
+        "id": "30dc3ab1598f37c9",
+        "type": "http request",
+        "z": "6f115337e98614cb",
+        "name": "Create device profile",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 520,
+        "y": 300,
+        "wires": [
+            [
+                "016e44da8ce94fbf"
+            ]
+        ]
+    },
+    {
+        "id": "26d78d7c70f67f3b",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "Set service profile filename",
+        "func": "var base_dir = env.get(\"SNAP_DATA\");\nmsg.filename = base_dir + \"/\" + flow.get(\"device_service_profile_filename\");\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 220,
+        "wires": [
+            [
+                "6f08acba8b5a4e24"
+            ]
+        ]
+    },
+    {
+        "id": "4766788cc9c8e0c9",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "setup",
+        "func": "global.set(\"core-data_url\",\"http://localhost:59880/api/v2/\" )\nglobal.set(\"core-metadata_url\",\"http://localhost:59881/api/v2/\" )\n\nlet device_name = \"sensortag1\"\nlet device_description = \"TI Sensortag #1\"\n\nlet register_device_service = {\n    \"name\": \"sensortag-control-device-service\",\n    \"description\": \"Manage Sensortag data\", \n    \"adminState\": \"UNLOCKED\", \n    \"labels\": [\"sensortag\",\"data\"], \n    \"baseAddress\": \"sensortag-device-service:59990\"\n}\n\nlet provision_device = {\n    \"name\": device_name,\n    \"description\": device_description,\n    \"adminState\": \"UNLOCKED\",\n    \"operatingState\": \"UP\",\n    \"labels\": [\"sensortag\",\"data\"],\n    \"location\": \"{lat:45.45,long:47.80}\",\n    \"serviceName\": \"sensortag-control-device-service\",\n    \"profileName\": \"Sensortag-Profile\",\n    \"protocols\": {\"sensortag-protocol\": {\"sensortag-address\": \"localhost\",\"port\": \"1234\",\"unitID\": \"1\"}},\n    \"notify\": false\n}\n    \nflow.set(\"device_service_profile_filename\",\"EdgeX_SensortagProfile.yml\")\nflow.set(\"register_device_service\", register_device_service);\nflow.set(\"provision_device\", provision_device);\nglobal.set(\"device_name\",device_name);\n\nreturn [msg, null];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 220,
+        "wires": [
+            [
+                "26d78d7c70f67f3b"
+            ]
+        ]
+    },
+    {
+        "id": "19de334a90e47cd2",
+        "type": "inject",
+        "z": "6f115337e98614cb",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": ".1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 220,
+        "wires": [
+            [
+                "4766788cc9c8e0c9"
+            ]
+        ]
+    },
+    {
+        "id": "6f08acba8b5a4e24",
+        "type": "file in",
+        "z": "6f115337e98614cb",
+        "name": "read service profile file",
+        "filename": "filename",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 720,
+        "y": 220,
+        "wires": [
+            [
+                "feaadf842eaf8586"
+            ]
+        ]
+    },
+    {
+        "id": "feaadf842eaf8586",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "Set upload file",
+        "func": "var databuffer = msg.payload;\nmsg.url = global.get(\"core-metadata_url\") + \"deviceprofile/uploadfile\";\nmsg.headers = {\n     \"Content-Type\" : \"multipart/form-data; boundary=---edgexfoundry98234298324989234\"\n     }\nmsg.payload =  \n'-----edgexfoundry98234298324989234\\r\\n'+\n'Content-Disposition: form-data; name=\"file\"; filename=\"'+ flow.get(\"device_service_profile_filename\") + '\"\\r\\n'+\n'Content-Type: application/octet-stream\\r\\n'+\n'\\r\\n'+\ndatabuffer +\n'\\r\\n'+\n'-----edgexfoundry98234298324989234--'+\n'\\r\\n'\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 300,
+        "wires": [
+            [
+                "30dc3ab1598f37c9"
+            ]
+        ]
+    },
+    {
+        "id": "6b1b14e377e1799c",
+        "type": "http in",
+        "z": "6f115337e98614cb",
+        "name": "EdgeX Health Check - core metatada",
+        "url": "/ping_edgex_core_metadata",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 170,
+        "y": 60,
+        "wires": [
+            [
+                "0b9f74dd5609899a"
+            ]
+        ]
+    },
+    {
+        "id": "dfd4f4f1b459843c",
+        "type": "http request",
+        "z": "6f115337e98614cb",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 570,
+        "y": 60,
+        "wires": [
+            [
+                "513d701e2f476274"
+            ]
+        ]
+    },
+    {
+        "id": "0b9f74dd5609899a",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "set url",
+        "func": "msg.url = global.get(\"core-metadata_url\") + \"ping\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 60,
+        "wires": [
+            [
+                "dfd4f4f1b459843c"
+            ]
+        ]
+    },
+    {
+        "id": "e28ae48c4aa4658a",
+        "type": "http response",
+        "z": "6f115337e98614cb",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1050,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6650b9ba8815bd2f",
+        "type": "http in",
+        "z": "6f115337e98614cb",
+        "name": "EdgeX Health Check - core data",
+        "url": "/ping_edgex_core_data",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "90c62b24fe655b05"
+            ]
+        ]
+    },
+    {
+        "id": "80adf23fba4f09be",
+        "type": "http request",
+        "z": "6f115337e98614cb",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 570,
+        "y": 100,
+        "wires": [
+            [
+                "c5e9c9808081e773"
+            ]
+        ]
+    },
+    {
+        "id": "90c62b24fe655b05",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "set url",
+        "func": "msg.url = global.get(\"core-data_url\") + \"ping\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 100,
+        "wires": [
+            [
+                "80adf23fba4f09be"
+            ]
+        ]
+    },
+    {
+        "id": "5d455deccd90e4e7",
+        "type": "http response",
+        "z": "6f115337e98614cb",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1050,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "c5e9c9808081e773",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "Prepare status code",
+        "func": "if (msg.statusCode != \"200\")\n    msg.statusCode = 503\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 100,
+        "wires": [
+            [
+                "5d455deccd90e4e7"
+            ]
+        ]
+    },
+    {
+        "id": "513d701e2f476274",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "Prepare status code",
+        "func": "if (msg.statusCode != \"200\")\n    msg.statusCode = 503\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 60,
+        "wires": [
+            [
+                "e28ae48c4aa4658a"
+            ]
+        ]
+    },
+    {
+        "id": "016e44da8ce94fbf",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "Set url and body",
+        "func": "msg.url = global.get(\"core-metadata_url\") + \"deviceservice\";\nmsg.payload = '[{\"apiVersion\": \"v2\",\"service\": {\"name\": \"sensortag-control-device-service\",\"description\": \"Manage Sensortag data\", \"adminState\": \"UNLOCKED\", \"labels\": [\"sensortag\",\"data\"], \"baseAddress\": \"sensortag-device-service:59990\"}}]'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "7983eae0cfbe9606"
+            ]
+        ]
+    },
+    {
+        "id": "7983eae0cfbe9606",
+        "type": "http request",
+        "z": "6f115337e98614cb",
+        "name": "Create device service",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "90a35f5b34836e57"
+            ]
+        ]
+    },
+    {
+        "id": "90a35f5b34836e57",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "Set url and body",
+        "func": "msg.url = global.get(\"core-metadata_url\") + \"device\";\nmsg.payload = '[{\"apiVersion\": \"v2\", \"device\": {\"name\": \"sensortag1\",\"description\": \"TI Sensortag #1\",\"adminState\": \"UNLOCKED\",\"operatingState\": \"UP\",\"labels\": [\"sensortag\",\"data\"],\"location\": \"{lat:45.45,long:47.80}\",\"serviceName\": \"sensortag-control-device-service\",\"profileName\": \"Sensortag-Profile\",\"protocols\": {\"sensortag-protocol\": {\"camera-address\": \"localhost\",\"port\": \"1234\",\"unitID\": \"1\"}},\"notify\": false}}]'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 460,
+        "wires": [
+            [
+                "c685577e7aa14284"
+            ]
+        ]
+    },
+    {
+        "id": "c685577e7aa14284",
+        "type": "http request",
+        "z": "6f115337e98614cb",
+        "name": "Provision the device",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 520,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2730643cefd8143b",
+        "type": "inject",
+        "z": "6f115337e98614cb",
+        "name": "Start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 160,
+        "wires": [
+            [
+                "4ad1a7f4877e4ca0"
+            ]
+        ]
+    },
+    {
+        "id": "a659548aca3cd339",
+        "type": "snapd",
+        "z": "6f115337e98614cb",
+        "name": "",
+        "x": 470,
+        "y": 160,
+        "wires": [
+            [
+                "647a94e5dce1d52a"
+            ]
+        ]
+    },
+    {
+        "id": "4ad1a7f4877e4ca0",
+        "type": "function",
+        "z": "6f115337e98614cb",
+        "name": "Start EdgeX",
+        "func": "msg.topic = \"snapd_rest_api_post\"\nmsg.payload = '{ \"command\" : \"/v2/apps\" , \"body\" : {\"action\": \"start\", \"names\": [\"edgexfoundry.core-metadata\"]} }'\nmsg.payload = JSON.parse(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 160,
+        "wires": [
+            [
+                "a659548aca3cd339"
+            ]
+        ]
+    },
+    {
+        "id": "647a94e5dce1d52a",
+        "type": "debug",
+        "z": "6f115337e98614cb",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 680,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "6660c4d141322e0c",
+        "type": "inject",
+        "z": "085a1f4e80349b48",
+        "name": "Startup",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "9a9e8bbfbfbfd35c"
+            ]
+        ]
+    },
+    {
+        "id": "f043b4252bdbb057",
+        "type": "snapd",
+        "z": "085a1f4e80349b48",
+        "name": "",
+        "x": 970,
+        "y": 140,
+        "wires": [
+            [
+                "66e14d5b27722301"
+            ]
+        ]
+    },
+    {
+        "id": "1f67b6a70e1ddad5",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Restart Grafana",
+        "func": "msg.topic = \"snapd_rest_api_post\"\nmsg.payload = '{ \"command\" : \"/v2/apps\" , \"body\" : {\"action\": \"restart\", \"names\": [\"grafana-cs\"]} }'\nmsg.payload = JSON.parse(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 140,
+        "wires": [
+            [
+                "f043b4252bdbb057"
+            ]
+        ]
+    },
+    {
+        "id": "66e14d5b27722301",
+        "type": "debug",
+        "z": "085a1f4e80349b48",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1140,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "8b0bd95d4b72f670",
+        "type": "inject",
+        "z": "085a1f4e80349b48",
+        "name": "Startup",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "2d0a89897ce1c895"
+            ]
+        ]
+    },
+    {
+        "id": "2d0a89897ce1c895",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "setup",
+        "func": "global.set(\"grafana_protocol\",\"http://\")\nglobal.set(\"grafana_admin\",\"admin:admin\")\nglobal.set(\"grafana_host\",\"localhost\")\nglobal.set(\"grafana_port\",\"3000\")\nflow.set(\"api_key_name\",\"mykey\")\nflow.set(\"api_key_name_id\",\"1\")\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 240,
+        "wires": [
+            [
+                "00c5efb789c45100"
+            ]
+        ]
+    },
+    {
+        "id": "133650d4fed7c34a",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Set url and body",
+        "func": "var grafana_url = global.get(\"grafana_protocol\")+global.get(\"grafana_admin\")+\"@\"+global.get(\"grafana_host\")+\":\"+global.get(\"grafana_port\")\n\nmsg.url = grafana_url + \"/api/auth/keys\"\nmsg.headers = {\n     \"Content-Type\" : \"application/json\"\n     }\nmsg.payload = '{\"name\": \"' + flow.get(\"api_key_name\") + '\",\"role\": \"Admin\"}'\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 300,
+        "wires": [
+            [
+                "123bd28c1e47d4dd"
+            ]
+        ]
+    },
+    {
+        "id": "123bd28c1e47d4dd",
+        "type": "http request",
+        "z": "085a1f4e80349b48",
+        "name": "Create new API key",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 790,
+        "y": 300,
+        "wires": [
+            [
+                "e887d8271703a80d",
+                "6412da260f55a35b"
+            ]
+        ]
+    },
+    {
+        "id": "61371d834a4c277a",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Set url and body",
+        "func": "var grafana_url = global.get(\"grafana_protocol\")+global.get(\"grafana_admin\")+\"@\"+global.get(\"grafana_host\")+\":\"+global.get(\"grafana_port\")\n\nmsg.url = grafana_url + \"/api/auth/keys/\" + flow.get(\"key_id\")\nmsg.headers = {\n     \"Content-Type\" : \"application/json\"\n     }\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 140,
+        "y": 300,
+        "wires": [
+            [
+                "0cbc6f8a514cb6ed"
+            ]
+        ]
+    },
+    {
+        "id": "0cbc6f8a514cb6ed",
+        "type": "http request",
+        "z": "085a1f4e80349b48",
+        "name": "Delete existing API key",
+        "method": "DELETE",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 360,
+        "y": 300,
+        "wires": [
+            [
+                "133650d4fed7c34a"
+            ]
+        ]
+    },
+    {
+        "id": "e887d8271703a80d",
+        "type": "yaml",
+        "z": "085a1f4e80349b48",
+        "property": "payload",
+        "name": "",
+        "x": 950,
+        "y": 300,
+        "wires": [
+            [
+                "1ef5410ec2251875"
+            ]
+        ]
+    },
+    {
+        "id": "00c5efb789c45100",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Set url and body",
+        "func": "var grafana_url = global.get(\"grafana_protocol\")+global.get(\"grafana_admin\")+\"@\"+global.get(\"grafana_host\")+\":\"+global.get(\"grafana_port\")\n\nmsg.url = grafana_url + \"/api/auth/keys/\" \nmsg.headers = {\n     \"Content-Type\" : \"application/json\"\n     }\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 240,
+        "wires": [
+            [
+                "f2a235d747e1274c"
+            ]
+        ]
+    },
+    {
+        "id": "f2a235d747e1274c",
+        "type": "http request",
+        "z": "085a1f4e80349b48",
+        "name": "GET api keys",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 640,
+        "y": 240,
+        "wires": [
+            [
+                "915cd1e1e962707f"
+            ]
+        ]
+    },
+    {
+        "id": "915cd1e1e962707f",
+        "type": "yaml",
+        "z": "085a1f4e80349b48",
+        "property": "payload",
+        "name": "",
+        "x": 810,
+        "y": 240,
+        "wires": [
+            [
+                "7b787abd3b52e281"
+            ]
+        ]
+    },
+    {
+        "id": "7b787abd3b52e281",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Select key id",
+        "func": "flow.set(\"key_id\",0)\nfor (const key of msg.payload) {\n    if ( key.name === \"mykey\" ) \n        flow.set(\"key_id\",key.id)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 240,
+        "wires": [
+            [
+                "61371d834a4c277a"
+            ]
+        ]
+    },
+    {
+        "id": "1ef5410ec2251875",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Save key",
+        "func": "global.set(\"grafana_api_key\",msg.payload.key)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 300,
+        "wires": [
+            [
+                "56a7e423e2c96a4b"
+            ]
+        ]
+    },
+    {
+        "id": "56a7e423e2c96a4b",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Set url and body",
+        "func": "var grafana_url = global.get(\"grafana_protocol\")+global.get(\"grafana_host\")+\":\"+global.get(\"grafana_port\")\n\nmsg.headers = {\n     \"Content-Type\" : \"application/json\",\n     \"Authorization\": \"Bearer \" + global.get(\"grafana_api_key\")\n     }\nmsg.url = grafana_url + \"/api/org\";\nmsg.payload = '{ \"name\": \"Canonical\" }'\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 140,
+        "y": 360,
+        "wires": [
+            [
+                "2a86a5409ed06a9f"
+            ]
+        ]
+    },
+    {
+        "id": "2a86a5409ed06a9f",
+        "type": "http request",
+        "z": "085a1f4e80349b48",
+        "name": "Update Organization",
+        "method": "PUT",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 360,
+        "y": 360,
+        "wires": [
+            [
+                "c582fa73a3ab810d"
+            ]
+        ]
+    },
+    {
+        "id": "d2100a9ba3059c36",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Set url and body",
+        "func": "var grafana_url = global.get(\"grafana_protocol\")+global.get(\"grafana_host\")+\":\"+global.get(\"grafana_port\")\nmsg.headers = {\n     \"Content-Type\" : \"application/json\",\n     \"Authorization\": \"Bearer \" + global.get(\"grafana_api_key\")\n     }\nmsg.url = grafana_url + \"/api/dashboards/db\";\n//msg.payload = '{\"dashboard\": {\"id\": null,\"uid\": null,\"title\": \"Production Overview\",\"tags\": [ \"templated\" ],\"timezone\": \"browser\",\"schemaVersion\": 16,\"version\": 0,\"refresh\": \"25s\"}, \"folderId\": 0, \"message\": \"Made changes to xyz\", \"overwrite\": false }'\nmsg.payload = '{ \"dashboard\": ' + msg.payload +',\"folderId\": 0,\"overwrite\": true}'\n//msg.payload = '{ \"dashboard\": ' + msg.payload +'}' \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 420,
+        "wires": [
+            [
+                "5cbf4cbc9df28a05"
+            ]
+        ]
+    },
+    {
+        "id": "e13c20cfa747fef3",
+        "type": "file in",
+        "z": "085a1f4e80349b48",
+        "name": "read dashboard file",
+        "filename": "db1",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 370,
+        "y": 420,
+        "wires": [
+            [
+                "d2100a9ba3059c36"
+            ]
+        ]
+    },
+    {
+        "id": "3afe413a443f2291",
+        "type": "file",
+        "z": "085a1f4e80349b48",
+        "name": "",
+        "filename": "file_out",
+        "filenameType": "msg",
+        "appendNewline": false,
+        "createDir": false,
+        "overwriteFile": "true",
+        "encoding": "none",
+        "x": 600,
+        "y": 140,
+        "wires": [
+            [
+                "1f67b6a70e1ddad5"
+            ]
+        ]
+    },
+    {
+        "id": "8c9aee94a7fe073c",
+        "type": "file in",
+        "z": "085a1f4e80349b48",
+        "name": "",
+        "filename": "file_in",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 460,
+        "y": 140,
+        "wires": [
+            [
+                "3afe413a443f2291"
+            ]
+        ]
+    },
+    {
+        "id": "9a9e8bbfbfbfd35c",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "compute file names",
+        "func": "var base_dir = env.get(\"SNAP_DATA\");\nmsg.file_in = base_dir + \"/grafana.ini\"\nmsg.file_out = base_dir + \"/grafana/grafana.ini\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 140,
+        "wires": [
+            [
+                "8c9aee94a7fe073c"
+            ]
+        ]
+    },
+    {
+        "id": "7e6e94e708019f33",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "compute file names",
+        "func": "var base_dir = env.get(\"SNAP_DATA\");\nmsg.db1 = base_dir + \"/sensortag_acc_lux_bat.json\"\nmsg.db2 = base_dir + \"/sensortag_temp_hum.json\"\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "e13c20cfa747fef3"
+            ]
+        ]
+    },
+    {
+        "id": "5cbf4cbc9df28a05",
+        "type": "http request",
+        "z": "085a1f4e80349b48",
+        "name": "Create dashboard1",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 790,
+        "y": 420,
+        "wires": [
+            [
+                "ed197710a188971c",
+                "e9ea860b308f1896"
+            ]
+        ]
+    },
+    {
+        "id": "ed197710a188971c",
+        "type": "debug",
+        "z": "085a1f4e80349b48",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "c582fa73a3ab810d",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Set url and body",
+        "func": "var grafana_url = global.get(\"grafana_protocol\")+global.get(\"grafana_host\")+\":\"+global.get(\"grafana_port\")\n\nmsg.headers = {\n     \"Content-Type\" : \"application/json\",\n     \"Authorization\": \"Bearer \" + global.get(\"grafana_api_key\")\n     }\nmsg.url = grafana_url + \"/api/datasources\";\nmsg.payload = '{\"name\":\"core-data\",\"uid\":\"BmvFBg74k\",\"type\":\"marcusolsson-json-datasource\",\"url\":\"http://localhost:59880/api/v2/reading\",\"access\":\"proxy\",\"basicAuth\":false}'\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 360,
+        "wires": [
+            [
+                "fc266b9a86975bb0"
+            ]
+        ]
+    },
+    {
+        "id": "fc266b9a86975bb0",
+        "type": "http request",
+        "z": "085a1f4e80349b48",
+        "name": "Create EdgeX core-data data source",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 850,
+        "y": 360,
+        "wires": [
+            [
+                "7e6e94e708019f33"
+            ]
+        ]
+    },
+    {
+        "id": "6412da260f55a35b",
+        "type": "debug",
+        "z": "085a1f4e80349b48",
+        "name": "Print API key",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "3feb0e6853e52d28",
+        "type": "function",
+        "z": "085a1f4e80349b48",
+        "name": "Set url and body",
+        "func": "var grafana_url = global.get(\"grafana_protocol\")+global.get(\"grafana_host\")+\":\"+global.get(\"grafana_port\")\nmsg.headers = {\n     \"Content-Type\" : \"application/json\",\n     \"Authorization\": \"Bearer \" + global.get(\"grafana_api_key\")\n     }\nmsg.url = grafana_url + \"/api/dashboards/db\";\n//msg.payload = '{\"dashboard\": {\"id\": null,\"uid\": null,\"title\": \"Production Overview\",\"tags\": [ \"templated\" ],\"timezone\": \"browser\",\"schemaVersion\": 16,\"version\": 0,\"refresh\": \"25s\"}, \"folderId\": 0, \"message\": \"Made changes to xyz\", \"overwrite\": false }'\nmsg.payload = '{ \"dashboard\": ' + msg.payload +',\"folderId\": 0,\"overwrite\": true}'\n//msg.payload = '{ \"dashboard\": ' + msg.payload +'}' \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 480,
+        "wires": [
+            [
+                "d663a3427fd7a6f9"
+            ]
+        ]
+    },
+    {
+        "id": "e9ea860b308f1896",
+        "type": "file in",
+        "z": "085a1f4e80349b48",
+        "name": "read dashboard file",
+        "filename": "db2",
+        "filenameType": "msg",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 370,
+        "y": 480,
+        "wires": [
+            [
+                "3feb0e6853e52d28"
+            ]
+        ]
+    },
+    {
+        "id": "d663a3427fd7a6f9",
+        "type": "http request",
+        "z": "085a1f4e80349b48",
+        "name": "Create dashboard2",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 790,
+        "y": 480,
+        "wires": [
+            [
+                "877286b3e64b2bd6"
+            ]
+        ]
+    },
+    {
+        "id": "877286b3e64b2bd6",
+        "type": "debug",
+        "z": "085a1f4e80349b48",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 480,
+        "wires": []
     }
 ]
